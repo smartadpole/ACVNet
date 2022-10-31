@@ -157,8 +157,7 @@ class ACVNet(nn.Module):
             elif isinstance(m, nn.Linear):
                 m.bias.data.zero_()
 
-    def forward(self, left, right):
-
+    def forward(self, left, right, train=True):
         if self.freeze_attn_weights:
             with torch.no_grad():
                 features_left = self.feature_extraction(left)
@@ -197,7 +196,7 @@ class ACVNet(nn.Module):
             out1 = self.dres2(cost0)
             out2 = self.dres3(out1)
 
-        if self.training:
+        if self.training and train:
 
             if not self.freeze_attn_weights:
 
